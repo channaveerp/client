@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import {
   MDBCard,
   MDBCardBody,
@@ -14,6 +15,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/fetaures/authSlice';
+import { GoogleLogin } from 'react-google-login';
+import { render } from '@testing-library/react';
 
 const Login = () => {
   const [inputValue, setInputValue] = useState({
@@ -38,6 +41,8 @@ const Login = () => {
     e.preventDefault();
     dispatch(login({ inputValue, navigate, toast }));
   };
+  const googleSuccess = () => {};
+  const googleFailure = () => {};
 
   return (
     <div
@@ -94,6 +99,21 @@ const Login = () => {
               </MDBBtn>
             </div>
           </MDBValidation>
+          <GoogleLogin
+            clientId='...'
+            render={(renderProps) => (
+              <MDBBtn
+                style={{ width: '100%', marginTop: '10px', cursor: 'pointer' }}
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}>
+                <MDBIcon fab icon='google' />
+                Google Sign In
+              </MDBBtn>
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy='single_host_origin'
+          />
         </MDBCardBody>
         <MDBCardFooter>
           <Link to='/register'>
