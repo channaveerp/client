@@ -41,8 +41,12 @@ const Login = () => {
     e.preventDefault();
     dispatch(login({ inputValue, navigate, toast }));
   };
-  const googleSuccess = () => {};
-  const googleFailure = () => {};
+  const googleSuccess = (res) => {
+    console.log(res);
+  };
+  const googleFailure = (err) => {
+    console.log(err);
+  };
 
   return (
     <div
@@ -100,13 +104,18 @@ const Login = () => {
             </div>
           </MDBValidation>
           <GoogleLogin
-            clientId='...'
+            clientId='938515353970-v7lnmba5a9ear4k1p8k8snmv4bi3astl.apps.googleusercontent.com'
             render={(renderProps) => (
               <MDBBtn
                 style={{ width: '100%', marginTop: '10px', cursor: 'pointer' }}
                 onClick={renderProps.onClick}
                 disabled={renderProps.disabled}>
-                <MDBIcon fab icon='google' />
+                <MDBIcon
+                  className='me-2'
+                  fab
+                  icon='google'
+                  style={{ marginRight: '5px' }}
+                />
                 Google Sign In
               </MDBBtn>
             )}
