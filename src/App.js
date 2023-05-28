@@ -8,6 +8,7 @@ import Header from './component/Header';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setUser } from './redux/fetaures/authSlice';
+import AddeditTour from './pages/AddeditTour';
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,8 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/Addtour' element={<AddeditTour />} />
+        <Route path='/edittour/:id' element={<AddeditTour />} />
       </Routes>
     </div>
   );
