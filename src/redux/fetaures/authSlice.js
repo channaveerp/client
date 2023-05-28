@@ -17,7 +17,7 @@ export const login = createAsyncThunk(
   }
 );
 
-// login action
+// register action
 export const register = createAsyncThunk(
   'auth/register',
   async ({ inputValue, navigate, toast }, { rejectWithValue }) => {
@@ -34,12 +34,40 @@ export const register = createAsyncThunk(
   }
 );
 
+// googleSignin
+export const google = createAsyncThunk(
+  'auth/googleSignIn',
+  async ({ result, navigate, toast }, { rejectWithValue }) => {
+    try {
+      const res = await api.googleSignIn(result);
+      console.log('res:', res);
+
+      toast.success('Google Signi-in succesfully');
+      navigate('/');
+      return res.data;
+    } catch (e) {
+      return rejectWithValue(e.response.data);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user: null,
     error: '',
     loading: false,
+  },
+  // to persist the state
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
+    // for logout
+    setLogout: (state, action) => {
+      localStorage.clear();
+      state.user = null;
+    },
   },
   extraReducers: {
     [login.pending]: (state, action) => {
@@ -68,7 +96,21 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload.message;
     },
+
+    [google.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [google.fulfilled]: (state, action) => {
+      state.loading = false;
+      localStorage.setItem('profile', JSON.stringify({ ...action.payload }));
+      state.user = action.payload;
+    },
+
+    [google.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
   },
 });
-
+export const { setUser ,setLogout } = authSlice.actions;
 export default authSlice.reducer;

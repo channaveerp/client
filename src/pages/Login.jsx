@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/fetaures/authSlice';
+import { google, login } from '../redux/fetaures/authSlice';
 import { GoogleLogin } from 'react-google-login';
 import { render } from '@testing-library/react';
 
@@ -42,7 +42,12 @@ const Login = () => {
     dispatch(login({ inputValue, navigate, toast }));
   };
   const googleSuccess = (res) => {
-    console.log(res);
+    const email = res?.profileObj?.email;
+    const name = res?.profileObj?.name;
+    const googleId = res?.googleId;
+    const token = res?.tokenId;
+    const result = { email, name, googleId, token };
+    dispatch(google(result));
   };
   const googleFailure = (err) => {
     console.log(err);
