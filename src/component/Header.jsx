@@ -11,6 +11,7 @@ import {
 } from 'mdb-react-ui-kit';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLogout } from '../redux/fetaures/authSlice';
+import { Box } from '@material-ui/core';
 const Header = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -55,16 +56,16 @@ const Header = () => {
               Logged-In as : {user?.user?.name}
             </h5>
           )}
-          <MDBNavbarLink href='/'>
+          <MDBNavbarLink href='/' style={{ marginTop: '14px' }}>
             <p className='header-text'>Home</p>
           </MDBNavbarLink>
           {user?.user?._id && (
             <>
               {' '}
-              <MDBNavbarLink href='/addTour'>
+              <MDBNavbarLink href='/addTour' style={{ marginTop: '14px' }}>
                 <p className='header-text'>Add Tour</p>
               </MDBNavbarLink>{' '}
-              <MDBNavbarLink href='/dashboard'>
+              <MDBNavbarLink href='/dashboard' style={{ marginTop: '14px' }}>
                 <p className='header-text'>Dashboard</p>
               </MDBNavbarLink>{' '}
             </>
@@ -72,7 +73,7 @@ const Header = () => {
 
           {user?.user?._id ? (
             <>
-              <MDBNavbarLink href='/login'>
+              <MDBNavbarLink href='/login' style={{ marginTop: '14px' }}>
                 <p className='header-text' onClick={handleLogout}>
                   Logout
                 </p>
